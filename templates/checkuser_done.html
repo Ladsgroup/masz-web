@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    pre {
+        padding: 1em;
+        white-space: pre-wrap;
+        overflow-x: hidden;
+        word-wrap: break-word;
+        background-color: #f8f9fa;
+        color: #000;
+        border: 1px solid #eaecf0;
+        margin-top: 5px;
+    }
+</style>
+{% if error %}
+<div class="alert alert-danger" role="alert">
+    {{error}}
+</div>
+{% else %}
+Foo
+{% endblock %}
