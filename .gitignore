@@ -11,6 +11,10 @@ config.yaml
 config.yml
 flask_session/
 
+#IntelliJ
+*.iml
+.idea/
+
 # Distribution / packaging
 .Python
 build/

@@ -1,9 +1,12 @@
 import os
-import yaml
-import mwoauth
 from functools import wraps
+
 import flask
+import mwoauth
+import yaml
 from flask_session import Session
+
+from masz.checkuser import auth_user_in_wiki
 
 app = flask.Flask(__name__)
 __dir__ = os.path.dirname(__file__)
@@ -11,9 +14,11 @@ app.config.update(
     yaml.safe_load(open(os.path.join(__dir__, 'config.yaml'))))
 Session(app)
 
+
 @app.route("/")
 def index():
-    return flask.render_template('home.html',username=flask.session.get('username'))
+    return flask.render_template('home.html',
+                                 username=flask.session.get('username'))
 
 
 def authenticated(f):
@@ -85,6 +90,7 @@ def logout():
 
 
 @app.route("/checkuser", methods=['GET'])
+@authenticated
 def checkuser():
     return flask.render_template('checkuser.html')
 
@@ -94,6 +100,10 @@ def checkuser():
 def checkuser_post():
     wiki = flask.request.form['wiki'].strip()
     user = flask.request.form['username'].strip()
+    if not wiki or not user:
+        return flask.redirect(flask.url_for('index'))
+    if not auth_user_in_wiki(flask.session['username'], wiki):
+        return flask.redirect(flask.url_for('index'))
     return flask.render_template(
         'checkuser_done.html',
         wiki=wiki,
@@ -102,4 +112,3 @@ def checkuser_post():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
-

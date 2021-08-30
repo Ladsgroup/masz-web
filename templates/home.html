@@ -2,11 +2,13 @@
 {% block content %}
 {% if username %}Hello, {{username}}{% endif %}</br>
 
-See https://www.mediawiki.org/wiki/User:Ladsgroup/masz
-<ul class="list-group">
-    <li class="list-group-item">
-        <a href="/auth/login">Login</a>
-        <a href="/checkuser">Check a user</a>
-    </li>
+See <a href="https://www.mediawiki.org/wiki/User:Ladsgroup/masz">[[mw:User:Ladsgroup/masz]]</a>
+<ul class="list-group" style="margin-top: 1em;">
+    {% if username %}
+        <li class="list-group-item"><a href="/checkuser">Check a user</a></li>
+        <li class="list-group-item"><a href="/auth/logout">Logout</a></li>
+    {% else %}
+        <li class="list-group-item"><a href="/auth/login">Login</a></li>
+    {% endif %}
 </ul>
 {% endblock %}
