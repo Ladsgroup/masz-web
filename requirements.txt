@@ -1,4 +1,5 @@
 Flask==1.1.2
+Flask-Session
 requests==2.23.0
 mwoauth
 pyyaml

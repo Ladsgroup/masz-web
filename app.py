@@ -3,22 +3,23 @@ import yaml
 import mwoauth
 from functools import wraps
 import flask
+from flask_session import Session
 
 app = flask.Flask(__name__)
 __dir__ = os.path.dirname(__file__)
 app.config.update(
     yaml.safe_load(open(os.path.join(__dir__, 'config.yaml'))))
-
+Session(app)
 
 @app.route("/")
 def index():
-    return flask.render_template('home.html')
+    return flask.render_template('home.html',username=flask.session.get('username'))
 
 
 def authenticated(f):
     @wraps(f)
     def wrapped_f(*args, **kwargs):
-        if 'user' in flask.session:
+        if 'username' in flask.session:
             return f(*args, **kwargs)
         else:
             return 'fuck no'
@@ -73,7 +74,6 @@ def oauth_callback():
         flask.session['access_token'] = dict(zip(
             access_token._fields, access_token))
         flask.session['username'] = identity['username']
-
     return flask.redirect(flask.url_for('index'))
 
 
@@ -102,3 +102,4 @@ def checkuser_post():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
+

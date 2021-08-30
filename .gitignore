@@ -6,8 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+# masz-specific stuff
 config.yaml
 config.yml
+flask_session/
 
 # Distribution / packaging
 .Python
