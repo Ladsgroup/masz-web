@@ -6,7 +6,7 @@ import mwoauth
 import yaml
 from flask_session import Session
 
-from masz.checkuser import auth_user_in_wiki
+from masz_web.checkuser import auth_user_in_wiki
 
 app = flask.Flask(__name__)
 __dir__ = os.path.dirname(__file__)
