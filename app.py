@@ -7,6 +7,7 @@ import yaml
 from flask_session import Session
 
 from masz_web.checkuser import auth_user_in_wiki
+from masz.find_socks_web import get_result, compare
 
 app = flask.Flask(__name__)
 __dir__ = os.path.dirname(__file__)
@@ -104,10 +105,19 @@ def checkuser_post():
         return flask.redirect(flask.url_for('index'))
     if not auth_user_in_wiki(flask.session['username'], wiki):
         return flask.redirect(flask.url_for('index'))
+    result = None
+    error = None
+    wiki_db = wiki.split('.')[0] + 'wiki'
+    try:
+        result = get_result(compare(user, wiki_db))
+    except BaseException:
+        error = 'Error'
     return flask.render_template(
         'checkuser_done.html',
         wiki=wiki,
-        user=user)
+        user=user,
+        result=result,
+        error=error)
 
 
 if __name__ == "__main__":

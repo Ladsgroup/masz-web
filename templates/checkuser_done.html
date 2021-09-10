@@ -17,6 +17,23 @@
     {{error}}
 </div>
 {% else %}
-Foo
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">score</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in result %}
+    <tr>
+        <th scope="row">{{row[0]}}</th>
+        <td>{{row[1]}}</td>
+        <td>{{row[2]}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endif %}
 {% endblock %}

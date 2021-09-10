@@ -1,0 +1,3 @@
+[submodule "masz"]
+	path = masz
+	url = https://github.com/Ladsgroup/masz
