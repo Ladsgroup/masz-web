@@ -19,7 +19,7 @@ def auth_user_in_wiki(username, wiki):
     api_result = requests.get('https://' + wiki + '/w/api.php', {
         'action': 'query',
         'list': 'users',
-        'ususers': urllib.parse.quote(username),
+        'ususers': username,
         'usprop': 'groups',
         'format': 'json'
     }).json()

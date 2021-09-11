@@ -110,6 +110,8 @@ def checkuser_post():
     wiki_db = wiki.split('.')[0] + 'wiki'
     try:
         result = get_result(compare(user, wiki_db))
+    except KeyError:
+        error = 'User does not have a fingerprint yet. Maybe a typo?'
     except BaseException:
         error = 'Error'
     return flask.render_template(
@@ -119,6 +121,7 @@ def checkuser_post():
         result=result,
         error=error)
 
-
-if __name__ == "__main__":
+def main():
     app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    main()
