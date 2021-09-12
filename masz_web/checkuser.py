@@ -4,12 +4,22 @@ import requests
 
 GODS = ['Ladsgroup']
 
-allowed_wikis = [
-    'en.wikipedia.org',
+allowed_wikis = sorted([
+    #'en.wikipedia.org',
     'fa.wikipedia.org',
     'it.wikipedia.org',
-    'cs.wikipedia.org']
+    'cs.wikipedia.org',
+    'es.wikipedia.org',
+    'simple.wikipedia.org',
+    'en.wikinews.org',
+    'pt.wikipedia.org',
+    'www.wikidata.org',
+])
 
+
+special_wikis = {
+    'www.wikidata.org': 'wikidatawiki',
+}
 
 def auth_user_in_wiki(username, wiki):
     if username in GODS:
@@ -29,3 +39,10 @@ def auth_user_in_wiki(username, wiki):
     if 'checkuser' in users[0].get('groups', []):
         return True
     return False
+
+def get_wiki_db_name(url):
+    if url in special_wikis:
+        return special_wikis[url]
+    if '.wikipedia.org' in url:
+        return url.split('.')[0] + 'wiki'
+    return url.split('.')[0] + url.split('.')[1]

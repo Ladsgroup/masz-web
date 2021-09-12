@@ -6,7 +6,7 @@ import mwoauth
 import yaml
 from flask_session import Session
 
-from masz_web.checkuser import auth_user_in_wiki
+from masz_web.checkuser import auth_user_in_wiki, allowed_wikis, get_wiki_db_name
 from masz.find_socks_web import get_result, compare
 
 app = flask.Flask(__name__)
@@ -93,7 +93,7 @@ def logout():
 @app.route("/checkuser", methods=['GET'])
 @authenticated
 def checkuser():
-    return flask.render_template('checkuser.html')
+    return flask.render_template('checkuser.html', allowed_wikis=allowed_wikis)
 
 
 @app.route("/checkuser", methods=['POST'])
@@ -107,7 +107,7 @@ def checkuser_post():
         return flask.redirect(flask.url_for('index'))
     result = None
     error = None
-    wiki_db = wiki.split('.')[0] + 'wiki'
+    wiki_db = get_wiki_db_name(wiki)
     try:
         result = get_result(compare(user, wiki_db))
     except KeyError:
