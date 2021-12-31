@@ -5,8 +5,10 @@ import requests
 GODS = ['Ladsgroup']
 
 allowed_wikis = sorted([
-    #'en.wikipedia.org',
+    'en.wikipedia.org',
     'fa.wikipedia.org',
+    'id.wikipedia.org',
+    'sv.wikipedia.org',
     'it.wikipedia.org',
     'cs.wikipedia.org',
     'es.wikipedia.org',
